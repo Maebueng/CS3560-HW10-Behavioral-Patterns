@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.List;
 
 public class Driver {
@@ -24,6 +25,15 @@ public class Driver {
         schoolServer.blockMessagesFromSpecificUser(nashala, anya);
 
         anya.sendMessage(List.of(nashala), "Can you see this?");
+
+        System.out.println("Showing Anya's history with Nashala");
+        Iterator<Message> iterator = anya.iterator(nashala);
+
+        while(iterator.hasNext()) {
+            Message msg = iterator.next();
+            System.out.println("Found messages with Nashala: '" + msg.getContent() + "', Sender: "
+            + msg.getSender().getUsername() + ")");
+        }
 
     } // end main
 } // end Driver
