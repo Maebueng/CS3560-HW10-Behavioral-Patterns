@@ -24,5 +24,6 @@ public class Driver {
         schoolServer.blockMessagesFromSpecificUser(nashala, anya);
 
         anya.sendMessage(List.of(nashala), "Can you see this?");
+
     } // end main
 } // end Driver

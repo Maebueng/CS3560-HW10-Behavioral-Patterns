@@ -1,6 +1,7 @@
+import java.util.Iterator;
 import java.util.List;
 
-public class User {
+public class User implements IterableByUser {
     private String username;
     private ChatServer chatServer;
     private ChatHistory chatHistory;
@@ -39,5 +40,10 @@ public class User {
         } else {
             System.out.println(username + " has nothing to delete");
         }
+    }
+
+    @Override
+    public Iterator<Message> iterator(User userToSearchWith) {
+        return chatHistory.iterator(userToSearchWith);
     }
 }
