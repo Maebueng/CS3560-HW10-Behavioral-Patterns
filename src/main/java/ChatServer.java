@@ -35,7 +35,7 @@ public class ChatServer {
         System.out.println(owner.getUsername() + " blocked " + userToBlock.getUsername());
     }
 
-    private boolean isBlocked(User owner, User target) {
+    public boolean isBlocked(User owner, User target) {
         // Accesses map of Owner to check if target is in blocked list
         List<User> blockedList = blockedUsers.get(owner);
 

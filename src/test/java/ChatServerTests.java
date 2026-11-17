@@ -17,7 +17,6 @@ public class ChatServerTests {
         assertNotNull(mainServer);
     }
 
-    // assertTrue that message was sent
     @Test
     public void sendMessageTest() {
         ChatServer mainServer = new ChatServer();
@@ -34,11 +33,61 @@ public class ChatServerTests {
         assertEquals("Hello, World!", user1.getChatHistory().getLastSentMessage().getContent());
     }
 
-    // assertTrue that blocked list contains target
     @Test
-    public void blockUsersTest() {}
+    public void blockUsersTest() {
+        ChatServer mainServer = new ChatServer();
+        ChatHistory messageLog = new ChatHistory();
+        User user1 = new User("TheLegend27", mainServer);
+        User user2 = new User("McLovin", mainServer);
 
-    // assertTrue that user can't send message to other user that has them blocked
+        mainServer.registerUser(user1);
+        mainServer.registerUser(user2);
+
+        mainServer.blockMessagesFromSpecificUser(user1, user2);
+
+        assertTrue(mainServer.isBlocked(user1, user2));
+
+
+    }
+
     @Test
-    public void blockedUserSendMessageTest() {}
+    public void blockedUserSendMessageTest() {
+        ChatServer mainServer = new ChatServer();
+        ChatHistory messageLog = new ChatHistory();
+        User user1 = new User("TheLegend27", mainServer);
+        User user2 = new User("McLovin", mainServer);
+
+        mainServer.registerUser(user1);
+        mainServer.registerUser(user2);
+
+        mainServer.blockMessagesFromSpecificUser(user1, user2);
+
+        user2.sendMessage(List.of(user1), "Can you see me?");
+
+        assertNull(user1.getChatHistory().getLastSentMessage());
+    }
+
+    @Test
+    public void mementoUndoHistoryTest() {
+        ChatServer mainServer = new ChatServer();
+        ChatHistory messageLog = new ChatHistory();
+        User user1 = new User("TheLegend27", mainServer);
+        User user2 = new User("McLovin", mainServer);
+
+        mainServer.registerUser(user1);
+        mainServer.registerUser(user2);
+
+        String messageContent = "Message test";
+
+        user1.sendMessage(List.of(user2), messageContent);
+
+        Message lastMessage = user1.getChatHistory().getLastSentMessage();
+
+        assertNotNull(lastMessage, "Chat history should contain the sent message");
+        assertEquals(messageContent, lastMessage.getContent(), "Saved memento content should match");
+
+        user1.undoLastMessage();
+
+        assertNull(user1.getChatHistory().getLastSentMessage(), "Chat history should be empty after undo");
+    }
 }

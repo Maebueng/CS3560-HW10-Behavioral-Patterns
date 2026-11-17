@@ -34,7 +34,8 @@ public class User {
     public void undoLastMessage() {
         Message lastMessage = chatHistory.getLastSentMessage();
         if (lastMessage != null) {
-            System.out.println(username + " deleted their message: " + lastMessage.getContent());
+            chatHistory.removeLastMessage();
+            System.out.println(username + " deleted their message: '" + lastMessage.getContent() + "'");
         } else {
             System.out.println(username + " has nothing to delete");
         }

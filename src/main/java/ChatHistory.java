@@ -15,4 +15,10 @@ public class ChatHistory {
             return messages.get(messages.size() - 1);
         }
     }
+
+    public void removeLastMessage() {
+        if (!messages.isEmpty()) {
+            messages.remove(messages.size() - 1);
+        }
+    }
 }
